@@ -12,8 +12,7 @@ app.use(parser.json());
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
 
 app.get('/api/parking', (req, res) => {
-  const query = "TODO";
-  const params = [];
+  const query = "SELECT * FROM least_likely";
   parking.query(query, (err, data) => {
     if (err) {
       throw new Error(err);

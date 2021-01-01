@@ -32,7 +32,8 @@ WITH (FORMAT csv, DELIMITER ',', HEADER);
 -- Create table that represents the total number of transactions at each meter in the dataset. 
 CREATE TABLE meter_count AS (SELECT meter_code, COUNT(*) FROM status GROUP BY meter_code);
 
--- Create table that represents the bottom 25% of parking meters used based on number of transactions.
+-- Create table that represents the bottom 25% of parking meters used based on number of transactions. 
+-- least_likely meaning the least likely to be taken, i.e. the most likely to be available.
 CREATE TABLE least_likely AS
 WITH bottom_50 AS (
     SELECT * 
