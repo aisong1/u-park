@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import HomePage from './HomePage';
 import SignUpForm from './SignUpForm';
 import LoginForm from './LoginForm';
@@ -19,16 +20,42 @@ const App = () => {
     setPage(2);
   };
 
-  const handleSignUpSubmit = (e) => {
+  const handleSignUpSubmit = (e, firstName, lastName, email, password) => {
     e.preventDefault();
-    console.log('Sign up submitted!');
-    setPage(3);
+    axios.post('/api/parking/users', {
+      'firstName': firstName.target.value,
+      'lastName': lastName.target.value,
+      'email': email.target.value,
+      'password': password.target.value,
+    })
+    .then(() => {
+      alert('Sign up completed. Welcome to WePark!');
+      setPage(3);
+    })
+    .catch((err) => {
+      alert('Sign up failed. Please try again.');
+      setPage(0);
+      throw new Error(err);
+    });
   }
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = (e, email, password) => {
     e.preventDefault();
-    console.log('Login submitted!');
-    setPage(3);
+    axios.get('/api/parking/users', {
+      params: {
+        'email': email.target.value,
+        'password': password.target.value,
+      },
+    })
+    .then(({ data }) => {
+      if (data.length === 0) {
+        alert('Login failed. Please try again');
+        setPage(2);
+      } else {
+        alert(`Welcome back, ${data[0].firstname}!`)
+        setPage(3);
+      }
+    });
   }
 
   const handleBackClick = (e) => {

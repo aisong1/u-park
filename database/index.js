@@ -1,6 +1,6 @@
-const { Pool } = require('pg');
+const pgp = require('pg-promise')();
 
-const parking = new Pool({
+const parking = pgp({
   database: 'parking',
 });
 
