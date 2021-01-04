@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+.container {
+  font-family: 'Nunito';
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leftSide {
+  text-align: center;
+  height: 100vh;
+  flex: 1;
+  background: #191A1A;
+}
+
+.rightSide {
+  height: 100vh;
+  flex: 1;
+  background: #DADADA;
+}
+
+.leftContent,
+.rightContent {
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.rightContent {
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  color: #dadada;
+  font-size: 50pt;
+}
+
+p {
+  color: #808080;
+  font-size: 12pt;
+}
