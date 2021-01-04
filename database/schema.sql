@@ -5,6 +5,7 @@ CREATE DATABASE parking;
 \c parking;
 
 DROP TABLE IF EXISTS status;
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS meter_count;
 DROP TABLE IF EXISTS least_likely;
 DROP TABLE IF EXISTS status_groups;
