@@ -1,63 +1,106 @@
-import React, { useState, useEffect, useRef } from 'react';
-import mapboxgl from 'mapbox-gl';
-import axios from 'axios';
-import styles from './styles/Map.css';
+import React, { useState, useEffect } from 'react';
+import HomePage from './HomePage';
+import SignUpForm from './SignUpForm';
+import LoginForm from './LoginForm';
+import Map from './Map';
+import styles from './styles/App.css';
 
-mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN;
+const App = () => {
+  const [page, setPage] = useState(0);
+  let render = null;
 
-const App = (props) => {
-  const [lng, setLng] = useState(-122.3321);
-  const [lat, setLat] = useState(47.6062);
-  const [zoom, setZoom] = useState(11);
+  useEffect(() => {}, [page]);
 
-  const mapContainer = useRef(null);
+  const handleSignUpClick = () => {
+    setPage(1);
+  };
+    
+  const handleLoginClick = () => {
+    setPage(2);
+  };
 
-  useEffect(() => {
-    // Initialize map
-    const map = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/dark-v10',
-      center: [lng, lat],
-      zoom,
-    });
+  const handleSignUpSubmit = (e) => {
+    e.preventDefault();
+    console.log('Sign up submitted!');
+    setPage(3);
+  }
 
-    // Add navigation control (+/- buttons)
-    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    console.log('Login submitted!');
+    setPage(3);
+  }
 
-    // Fetch data from API
-    axios.get('/api/parking')
-      .then(({ data }) => {
-        const { rows } = data;
-        rows.forEach((row) => {
-          new mapboxgl.Marker({
-            color: "#FFFFFF",
-          })
-          .setPopup(
-            new mapboxgl.Popup({ 
-              className: 'popup' 
-            }).setHTML(
-              `<p><b>Meter Code</b>: ${row.meter_code}</p>
-              <p><b>Street</b>: ${row.blockface_name}</p>
-              <p><b>Side of Street</b>: ${row.side_of_street}</p>`
-            )
-          )
-          .setLngLat([row.longitude, row.latitude])
-          .addTo(map);
-        })
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+  const handleBackClick = (e) => {
+    e.preventDefault();
+    setPage(0);
+  }
 
-    // Clean up map on unmount
-    // return () => map.remove();
-  }, []);
-
+  if (page === 0) { // Home Page
+    render = (
+      <div className={styles.container}>
+        <div className={styles.leftSide}>
+          <div className={styles.leftContent}>
+            <h1>WePark</h1>
+            <p>Parking simplified.</p>
+          </div>
+        </div>
+        <div className={styles.rightSide}>
+          <div className={styles.rightContent}>
+            <HomePage
+              handleSignUpClick={handleSignUpClick}
+              handleLoginClick={handleLoginClick}
+            />
+          </div>
+        </div> 
+      </div>
+    )
+  } else if (page === 1) { // Sign Up 
+    render = (
+      <div className={styles.container}>
+        <div className={styles.leftSide}>
+          <div className={styles.leftContent}>
+            <h1>WePark</h1>
+            <p>Parking simplified.</p>
+          </div>
+        </div>
+        <div className={styles.rightSide}>
+          <div className={styles.rightContent}>
+            <SignUpForm 
+              handleSignUpSubmit={handleSignUpSubmit}
+              handleBackClick={handleBackClick}
+            />
+          </div>
+        </div> 
+      </div>
+    )
+  } else if (page === 2) { // Login
+    render = (
+      <div className={styles.container}>
+        <div className={styles.leftSide}>
+          <div className={styles.leftContent}>
+            <h1>WePark</h1>
+            <p>Parking simplified.</p>
+          </div>
+        </div>
+        <div className={styles.rightSide}>
+          <div className={styles.rightContent}>
+            <LoginForm 
+              handleLoginSubmit={handleLoginSubmit}
+              handleBackClick={handleBackClick}
+            />
+          </div>
+        </div> 
+      </div>
+    )
+  } else { // Map
+    render = <Map />
+  }
   return (
-    <div>
-      <div className={styles.mapContainer} ref={mapContainer} />
-    </div>
-  );
+    <>
+      {render}
+    </>
+  )
 };
 
 export default App;
