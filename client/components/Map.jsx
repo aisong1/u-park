@@ -33,8 +33,7 @@ const Map = (props) => {
     // Fetch data from API
     axios.get('/api/parking')
       .then(({ data }) => {
-        const { rows } = data;
-        rows.forEach((row) => {
+        data.forEach((row) => {
           new mapboxgl.Marker()
           .setPopup(
             new mapboxgl.Popup({ 
