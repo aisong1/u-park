@@ -48,6 +48,9 @@ app.post('/api/parking/users', (req, res) => {
   const params = [firstName, lastName, email, password];
 
   parking.any(query, params)
+    .then((data) => {
+      res.send(data);
+    })
     .catch((err) => {
       console.log('Failed to create new user: ', err);
       res.end();
