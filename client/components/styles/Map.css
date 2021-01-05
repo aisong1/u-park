@@ -1,7 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
 .mapContainer {
+  border-left: 1px solid #fff;
   position: absolute;
+  left: 25%;
+  width: 75%;
   top: 0;
-  right: 0;
-  left: 0;
   bottom: 0;
+}
+
+.sidebar {
+  font-family: 'Nunito';
+  width: 25%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.sidebar h1 {
+  color: #dadada;
+  font-size: 30pt;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.heading {
+  background: #191A1A;
+  color: #DADADA;
+  border-bottom: 1px solid #eee;
+  padding: 0 10px;
 }
