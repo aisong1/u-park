@@ -8,9 +8,12 @@ import styles from './styles/App.css';
 
 const App = () => {
   const [page, setPage] = useState(0);
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
+  const [signUpFailed, setSignUpFailed] = useState(false);
+  const [loginFailed, setLoginFailed] = useState(false);
   let render = null;
 
-  useEffect(() => {}, [page]);
+  useEffect(() => {}, [page, signUpFailed, loginFailed]);
 
   const handleSignUpClick = () => {
     setPage(1);
@@ -22,45 +25,57 @@ const App = () => {
 
   const handleSignUpSubmit = (e, firstName, lastName, email, password) => {
     e.preventDefault();
-    axios.post('/api/parking/users', {
-      'firstName': firstName.target.value,
-      'lastName': lastName.target.value,
-      'email': email.target.value,
-      'password': password.target.value,
-    })
-    .then(() => {
-      alert('Sign up completed. Welcome to WePark!');
-      setPage(3);
-    })
-    .catch((err) => {
-      alert('Sign up failed. Please try again.');
-      setPage(0);
-      throw new Error(err);
-    });
+    if (firstName.target === undefined ||
+        lastName.target === undefined ||
+        email.target === undefined ||
+        password.target === undefined) {
+          setSignUpFailed(true);
+    } else {
+      axios.post('/api/parking/users', {
+        'firstName': firstName.target.value,
+        'lastName': lastName.target.value,
+        'email': email.target.value,
+        'password': password.target.value,
+      })
+      .then(({ data }) => {
+        if (Array.isArray(data)) {
+          setPage(2);
+          setSignUpSuccess(true);
+        } else {
+          setPage(1);
+          setSignUpFailed(true);
+        }
+      })
+    }
   }
 
   const handleLoginSubmit = (e, email, password) => {
     e.preventDefault();
-    axios.get('/api/parking/users', {
-      params: {
-        'email': email.target.value,
-        'password': password.target.value,
-      },
-    })
-    .then(({ data }) => {
-      if (data.length === 0) {
-        alert('Login failed. Please try again');
-        setPage(2);
-      } else {
-        alert(`Welcome back, ${data[0].firstname}!`)
-        setPage(3);
-      }
-    });
+    if (email.target === undefined || password.target === undefined) {
+      setLoginFailed(true);
+    } else {
+      axios.get('/api/parking/users', {
+        params: {
+          'email': email.target.value,
+          'password': password.target.value,
+        },
+      })
+      .then(({ data }) => {
+        if (data.length > 0) {
+          setPage(3);
+        } else {
+          setPage(2);
+          setLoginFailed(true);
+        }
+      });
+    }
   }
 
-  const handleBackClick = (e) => {
-    e.preventDefault();
+  const handleBackClick = () => {
     setPage(0);
+    setSignUpSuccess(false);
+    setSignUpFailed(false);
+    setLoginFailed(false);
   }
 
   if (page === 0) { // Home Page
@@ -96,6 +111,7 @@ const App = () => {
             <SignUpForm 
               handleSignUpSubmit={handleSignUpSubmit}
               handleBackClick={handleBackClick}
+              failed={signUpFailed}
             />
           </div>
         </div> 
@@ -115,6 +131,8 @@ const App = () => {
             <LoginForm 
               handleLoginSubmit={handleLoginSubmit}
               handleBackClick={handleBackClick}
+              signUpSuccess={signUpSuccess}
+              failed={loginFailed}
             />
           </div>
         </div> 
