@@ -1,15 +1,30 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+import styles from './styles/Form.css';
 
-const SignUpForm = ({ handleSignUpSubmit, handleBackClick }) => {
+const SignUpForm = ({ handleSignUpSubmit, handleBackClick, failed }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
-    <div>
+    <div className={styles.formContainer}>
+      {failed ? (
+        <div>
+          <Alert variant="danger">
+            <Alert.Heading>{'Sign up failed.'}</Alert.Heading>
+            <p>
+              Double check that you have filled out all forms and try again.
+            </p>
+          </Alert>
+        </div>
+      ) :
+      (
+        <></>
+      )}
       <Form onSubmit={(e) => handleSignUpSubmit(e, firstName, lastName, email, password)}>
         <Form.Group controlId="signupFirstName">
           <Form.Label>First name</Form.Label>
@@ -46,12 +61,14 @@ const SignUpForm = ({ handleSignUpSubmit, handleBackClick }) => {
             onChange={setPassword}
           />
         </Form.Group>
-        <Button variant="dark" type="submit">
-          Submit
-        </Button>
-        <Button variant="outline-secondary" type="submit" onClick={handleBackClick}>
-          Back
-        </Button>
+        <div className={styles.submit}>
+          <Button variant="dark" type="submit">
+            Submit
+          </Button>
+          <Button variant="outline-secondary" type="submit" onClick={handleBackClick}>
+            Back
+          </Button>
+        </div>
       </Form>
     </div>
   )

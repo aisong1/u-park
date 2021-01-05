@@ -1,13 +1,40 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+import styles from './styles/Form.css';
 
-const LoginForm = ({ handleLoginSubmit, handleBackClick }) => {
+const LoginForm = ({ handleLoginSubmit, handleBackClick, signUpSuccess, failed }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
-    <div>
+    <div className={styles.formContainer}>
+      {signUpSuccess ? (
+        <div>
+          <Alert variant="success">
+            <Alert.Heading>{'Account created.'}</Alert.Heading>
+            <p>
+              Login to find the best parking spots in Seattle today!
+            </p>
+          </Alert>
+        </div>
+      ) : (
+        <></>
+      )}
+      {failed ? (
+        <div>
+          <Alert variant="danger">
+            <Alert.Heading>{'Login failed.'}</Alert.Heading>
+            <p>
+              Double check that you have inputted 
+              your information correctly and try again.
+            </p>
+          </Alert>
+        </div>
+      ) : (
+        <></>
+      )}
       <Form onSubmit={(e) => handleLoginSubmit(e, email, password)}>
         <Form.Group controlId="loginEmail">
           <Form.Label>Email address</Form.Label>
@@ -25,12 +52,14 @@ const LoginForm = ({ handleLoginSubmit, handleBackClick }) => {
             onChange={setPassword}
           />
         </Form.Group>
-        <Button variant="dark" type="submit">
-          Submit
-        </Button>
-        <Button variant="outline-secondary" type="submit" onClick={handleBackClick}>
-          Back
-        </Button>
+        <div className={styles.submit}>
+          <Button variant="dark" type="submit">
+            Submit
+          </Button>
+          <Button variant="outline-secondary" type="submit" onClick={handleBackClick}>
+            Back
+          </Button>
+        </div>
       </Form>
     </div>
   );
