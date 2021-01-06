@@ -27,7 +27,7 @@ const LoginForm = ({ handleLoginSubmit, handleBackClick, signUpSuccess, failed }
           <Alert variant="danger">
             <Alert.Heading>{'Login failed.'}</Alert.Heading>
             <p>
-              Double check that you have inputted 
+              Double check that you have input 
               your information correctly and try again.
             </p>
           </Alert>
