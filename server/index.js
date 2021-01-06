@@ -57,6 +57,24 @@ app.post('/api/parking/users', (req, res) => {
     });
 });
 
+app.get('/api/parking/favorites', (req, res) => {
+  const { email } = req.query;
+  const query = `SELECT f.user_id, l.meter_code, l.blockface_name, l.side_of_street, l.latitude, l.longitude FROM users AS u, favorites AS f, least_likely AS l
+                 WHERE u.id=f.user_id
+                 AND f.meter_code=l.meter_code
+                 AND u.email=$1;`;
+  const params = [email];
+
+  parking.any(query, params)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(`Failed to retrieve ${email}'s favorites: `, err);
+      res.end();
+    });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
