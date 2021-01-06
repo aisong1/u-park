@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
 .mapContainer {
-  border-left: 1px solid #fff;
+  border-left: 1px solid #808080;
   position: absolute;
   left: 25%;
   width: 75%;
@@ -15,18 +15,83 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .sidebar h1 {
   color: #dadada;
   font-size: 30pt;
-  text-align: center;
   padding-top: 10px;
 }
 
 .heading {
-  background: #191A1A;
+  background: #45b1cc;
   color: #DADADA;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #808080;
   padding: 0 10px;
+}
+
+.favorites {
+  background: #191A1A;
+  height: 100%;
+  overflow: auto;
+  padding-bottom: 60px;
+}
+
+.favorites .item {
+  display: block;
+  border-bottom: 1px solid #808080;
+  padding: 10px;
+  text-decoration: none;
+}
+
+/* .favorites .item:last-child { border-bottom: none; } */
+
+.favorites .item .title {
+  display: block;
+  color: #45b1cc;
+  font-weight: 700;
+}
+
+.favorites .item .title small { font-weight: 400; }
+
+.favorites .item.active .title,
+.favorites .item .title:hover { color: #77e3fe; }
+
+.favorites .item.active {
+  background-color: #191A1A;
+}
+
+.favorites .item .desc {
+  color: #45b1cc;
+}
+
+.favorites .item .desc p {
+  margin: 0 auto;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  border-left: 0;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: none;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #45b1cc;
+  border-radius: 0;
+}
+
+.clearfix { display: block; }
+
+.clearfix::after {
+  content: '.';
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
 }
