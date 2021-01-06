@@ -1,6 +1,18 @@
 {
   "presets": ["@babel/preset-env"],
   "plugins": [
-    "transform-class-properties"
+    "transform-class-properties",
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "absoluteRuntime": false,
+        "corejs": { "version": 3, "proposals": true },
+        "helpers": true,
+        "regenerator": true,
+        "useESModules": false,
+        "version": "7.0.0-beta.0"
+      }
+    ],
+    "@babel/plugin-transform-regenerator"
   ]
 }

@@ -6,6 +6,7 @@ CREATE DATABASE parking;
 
 DROP TABLE IF EXISTS status;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS favorites;
 DROP TABLE IF EXISTS meter_count;
 DROP TABLE IF EXISTS least_likely;
 DROP TABLE IF EXISTS status_groups;
@@ -13,7 +14,7 @@ DROP TABLE IF EXISTS status_groups;
 CREATE EXTENSION pgcrypto;
 
 CREATE TABLE status (
-    _id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     txn_id VARCHAR(40),
     meter_code VARCHAR(40),
     txndatetime TIMESTAMP,
@@ -34,6 +35,11 @@ CREATE TABLE users (
     lastName TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL
+);
+
+CREATE TABLE favorites (
+    user_id INTEGER NOT NULL,
+    meter_code VARCHAR(40) NOT NULL
 );
 
 COPY status (txn_id, meter_code, txndatetime, payment_mean, amount_paid, duration_min, blockface_name, side_of_street, element_key, parking_space_number, latitude, longitude) 

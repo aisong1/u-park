@@ -42,3 +42,10 @@ p {
   color: #808080;
   font-size: 12pt;
 }
+
+.map {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
