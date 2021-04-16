@@ -10,10 +10,13 @@ But never fear - WePark is here!
 Built with React (Hooks), NodeJS Express, CSS Modules, Mapbox, and PostgreSQL.
 
 ## Demo
-Create an account, or login into an existing one, and watch as all available parking meters not currently in use will show up on an interactive map. Explore different areas with a click-and-drag, or type in an address of your own to see nearby available meters! 
+Create an account, or login into an existing one, and watch as all available parking meters not currently in use will show up on an interactive map. 
 
 <img src="https://github.com/aisong1/we-park/blob/main/img/signupDemo.gif" width="470">
 <img src="https://github.com/aisong1/we-park/blob/main/img/loginDemo.gif" width="470">
+
+Explore different areas with a click-and-drag, or type in an address of your own to see nearby available meters! 
+
 <img src="https://github.com/aisong1/we-park/blob/main/img/searchDemo.gif" width="470">
 
 
